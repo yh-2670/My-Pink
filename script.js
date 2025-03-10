@@ -1,4 +1,3 @@
-
 // 페이지 전환 함수
 function showPage(pageId) {
   // 모든 페이지 숨기기
@@ -6,15 +5,18 @@ function showPage(pageId) {
   pages.forEach(page => {
     page.classList.remove('active');
   });
-  
+
   // 선택한 페이지만 표시
   document.getElementById(pageId).classList.add('active');
-  
+
   // 페이지별 초기화
   if (pageId === 'painkillers') {
     document.getElementById('medicineResult').style.display = 'none';
   } else if (pageId === 'guide') {
     initCards();
+  } else if (pageId === 'workplace') {
+    // 저장된 메시지 불러오기
+    loadSavedMessages();
   }
 }
 
@@ -34,7 +36,7 @@ function showMedicineResult() {
   const level = parseInt(painSlider.value);
   const resultContainer = document.getElementById('medicineResult');
   let recommendation = '';
-  
+
   if (level >= 1 && level <= 3) {
     recommendation = `
       <h3>약한 통증 (단계 ${level}/10)</h3>
@@ -61,7 +63,7 @@ function showMedicineResult() {
       <p><strong>주의:</strong> 심한 통증이 지속되면 자궁내막증 등의 질환일 수 있으니 반드시 산부인과 검진을 받으세요.</p>
     `;
   }
-  
+
   resultContainer.innerHTML = recommendation;
   resultContainer.style.display = 'block';
 }
@@ -71,7 +73,7 @@ function copyToClipboard(elementId) {
   const textarea = document.getElementById(elementId);
   textarea.select();
   document.execCommand('copy');
-  
+
   // 복사 성공 알림
   alert('메시지가 클립보드에 복사되었습니다!');
 }
@@ -82,12 +84,27 @@ function editMessage(elementId) {
   alert('메시지를 수정한 후 복사하기 버튼을 눌러주세요.');
 }
 
+function saveMessage(elementId) {
+  const message = document.getElementById(elementId).value;
+  localStorage.setItem('workplaceMessage', message);
+  alert('저장되었습니다!');
+}
+
+
+function loadSavedMessages() {
+  const savedMessage = localStorage.getItem('workplaceMessage');
+  const messageArea = document.getElementById('workplaceMessageArea'); // You'll need this element in your HTML
+  if (savedMessage) {
+    messageArea.value = savedMessage;
+  }
+}
+
 // 생리대 추천 관련 기능
 function showPadRecommendation(type) {
   const resultContainer = document.getElementById('padResult');
   let recommendation = '';
   let hashtags = '';
-  
+
   switch(type) {
     case 'absorption':
       hashtags = '<span class="hashtag">#직접 써봤어요!</span> <span class="hashtag">#흡수량</span>';
@@ -234,7 +251,7 @@ function showPadRecommendation(type) {
       `;
       break;
   }
-  
+
   resultContainer.innerHTML = recommendation;
   resultContainer.style.display = 'block';
 }
@@ -255,7 +272,7 @@ const guideTopics = [
     description: '내용~~',
     icon: 'https://cdn-icons-png.flaticon.com/512/4379/4379428.png',
     content: '생리대에는 다양한 종류가 있습니다: 일반 생리대, 오버나이트 패드(밤용), 팬티라이너(얇은 생리대), 탐폰(체내 삽입형), 생리컵 등이 있습니다. 자신의 몸과 상황에 맞는 제품을 선택하는 것이 중요합니다.',
-    image: 'https://images.unsplash.com/photo-1628935283815-2a53dba818e6?q=80&w=1287&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1628935750028-13d0f1dc8424?q=80&w=1287&auto=format&fit=crop'
   },
   {
     id: 'brands',
@@ -326,7 +343,7 @@ const guideTopics = [
 function initCards() {
   const topicList = document.getElementById('guideTopicList');
   const cardContainer = document.getElementById('cardContainer');
-  
+
   // 주제 목록 렌더링
   topicList.innerHTML = '';
   guideTopics.forEach(topic => {
@@ -344,7 +361,7 @@ function initCards() {
     `;
     topicList.appendChild(topicElement);
   });
-  
+
   // 뒤로 가기 버튼 이벤트 리스너
   document.getElementById('backToTopics').addEventListener('click', showTopicList);
 }
@@ -352,14 +369,14 @@ function initCards() {
 function showTopicContent(topicId) {
   const topic = guideTopics.find(t => t.id === topicId);
   if (!topic) return;
-  
+
   // 주제 목록 숨기기
   document.getElementById('guideTopicList').style.display = 'none';
-  
+
   // 카드 컨테이너 표시
   const cardContainer = document.getElementById('cardContainer');
   cardContainer.style.display = 'block';
-  
+
   // 선택한 주제의 컨텐츠 렌더링
   cardContainer.innerHTML = `
     <div class="card">
@@ -368,7 +385,7 @@ function showTopicContent(topicId) {
       <p class="card-content">${topic.content}</p>
     </div>
   `;
-  
+
   // 네비게이션 표시
   document.querySelector('.card-navigation').style.display = 'flex';
   document.getElementById('cardIndicator').textContent = '1 / 1';
@@ -377,10 +394,10 @@ function showTopicContent(topicId) {
 function showTopicList() {
   // 주제 목록 표시
   document.getElementById('guideTopicList').style.display = 'flex';
-  
+
   // 카드 컨테이너 숨기기
   document.getElementById('cardContainer').style.display = 'none';
-  
+
   // 네비게이션 숨기기
   document.querySelector('.card-navigation').style.display = 'none';
 }

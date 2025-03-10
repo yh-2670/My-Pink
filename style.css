@@ -296,6 +296,12 @@ h2 {
   width: 48%;
 }
 
+.save-btn {
+  background-color: #4CAF50;
+  margin-top: 10px;
+  width: 100%;
+}
+
 .policy-btn {
   background-color: var(--secondary-color);
   color: var(--primary-color);
