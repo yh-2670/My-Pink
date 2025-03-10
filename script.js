@@ -11,7 +11,10 @@ function showPage(pageId) {
 
   // 페이지별 초기화
   if (pageId === 'painkillers') {
-    document.getElementById('medicineResult').style.display = 'none';
+    // 통증 수준 기본값을 1로 설정
+    painSlider.value = 1;
+    painValue.textContent = 1;
+    showMedicineResult(1);
   } else if (pageId === 'guide') {
     initCards();
   } else if (pageId === 'workplace') {
@@ -88,15 +91,6 @@ function copyToClipboard(elementId) {
 function editMessage(elementId) {
   const textarea = document.getElementById(elementId);
   textarea.focus();
-  
-  // 수정하기 버튼을 저장하기 버튼으로 변경
-  const editButtons = document.querySelectorAll('.action-btn');
-  editButtons.forEach(button => {
-    if (button.textContent === '수정하기' && button.getAttribute('data-target') === elementId) {
-      button.textContent = '저장하기';
-      button.onclick = function() { saveMessage(elementId); };
-    }
-  });
 }
 
 function saveMessage(elementId) {
@@ -106,33 +100,8 @@ function saveMessage(elementId) {
   // 해당 ID의 메시지를 localStorage에 저장
   localStorage.setItem(elementId, message);
   
-  // 저장 완료 알림
-  const notification = document.createElement('div');
-  notification.textContent = '저장되었습니다!';
-  notification.style.backgroundColor = '#4CAF50';
-  notification.style.color = 'white';
-  notification.style.padding = '10px';
-  notification.style.borderRadius = '5px';
-  notification.style.textAlign = 'center';
-  notification.style.marginTop = '10px';
-  notification.style.position = 'relative';
-  notification.style.opacity = '1';
-  notification.style.transition = 'opacity 2s';
-  
-  textarea.parentNode.insertBefore(notification, textarea.nextSibling);
-  
-  // 버튼을 다시 수정하기로 되돌림
-  const saveButton = event.currentTarget;
-  saveButton.textContent = '수정하기';
-  saveButton.onclick = function() { editMessage(elementId); };
-  
-  // 알림 메시지 2초 후 사라지게 함
-  setTimeout(() => {
-    notification.style.opacity = '0';
-    setTimeout(() => {
-      notification.remove();
-    }, 2000);
-  }, 2000);
+  // 저장 완료 알림 (alert 형식으로 변경)
+  alert('저장되었습니다!');
 }
 
 function loadSavedMessages() {
