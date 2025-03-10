@@ -355,8 +355,9 @@ h2 {
 }
 
 .product-item {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(100px, 2fr) 150px 60px;
+  grid-gap: 10px;
   align-items: center;
   padding: 15px 0;
   border-bottom: 1px solid #eee;
@@ -385,7 +386,8 @@ h2 {
   font-size: 0.8rem;
   color: white;
   text-align: center;
-  min-width: 60px;
+  width: 60px;
+  justify-self: end;
 }
 
 /* 초경 전/남자들을 위한 기본 백서 페이지 */

@@ -23,18 +23,25 @@ function showPage(pageId) {
 // 생리통약 관련 기능
 const painSlider = document.getElementById('painLevel');
 const painValue = document.getElementById('painValue');
+const resultContainer = document.getElementById('medicineResult');
 
-// 슬라이더 값 변경 시 표시
+// 슬라이더 값 변경 시 표시 및 결과 즉시 업데이트
 if (painSlider) {
   painSlider.addEventListener('input', function() {
-    painValue.textContent = this.value;
+    const level = parseInt(this.value);
+    painValue.textContent = level;
+    showMedicineResult(level);
+  });
+  
+  // 페이지 로드 시 기본값 표시
+  window.addEventListener('DOMContentLoaded', function() {
+    const initialLevel = parseInt(painSlider.value);
+    showMedicineResult(initialLevel);
   });
 }
 
 // 생리통약 결과 표시
-function showMedicineResult() {
-  const level = parseInt(painSlider.value);
-  const resultContainer = document.getElementById('medicineResult');
+function showMedicineResult(level) {
   let recommendation = '';
 
   if (level >= 1 && level <= 3) {
@@ -81,21 +88,64 @@ function copyToClipboard(elementId) {
 function editMessage(elementId) {
   const textarea = document.getElementById(elementId);
   textarea.focus();
-  alert('메시지를 수정한 후 복사하기 버튼을 눌러주세요.');
+  
+  // 수정하기 버튼을 저장하기 버튼으로 변경
+  const editButtons = document.querySelectorAll('.action-btn');
+  editButtons.forEach(button => {
+    if (button.textContent === '수정하기' && button.getAttribute('data-target') === elementId) {
+      button.textContent = '저장하기';
+      button.onclick = function() { saveMessage(elementId); };
+    }
+  });
 }
 
 function saveMessage(elementId) {
-  const message = document.getElementById(elementId).value;
-  localStorage.setItem('workplaceMessage', message);
-  alert('저장되었습니다!');
+  const textarea = document.getElementById(elementId);
+  const message = textarea.value;
+  
+  // 해당 ID의 메시지를 localStorage에 저장
+  localStorage.setItem(elementId, message);
+  
+  // 저장 완료 알림
+  const notification = document.createElement('div');
+  notification.textContent = '저장되었습니다!';
+  notification.style.backgroundColor = '#4CAF50';
+  notification.style.color = 'white';
+  notification.style.padding = '10px';
+  notification.style.borderRadius = '5px';
+  notification.style.textAlign = 'center';
+  notification.style.marginTop = '10px';
+  notification.style.position = 'relative';
+  notification.style.opacity = '1';
+  notification.style.transition = 'opacity 2s';
+  
+  textarea.parentNode.insertBefore(notification, textarea.nextSibling);
+  
+  // 버튼을 다시 수정하기로 되돌림
+  const saveButton = event.currentTarget;
+  saveButton.textContent = '수정하기';
+  saveButton.onclick = function() { editMessage(elementId); };
+  
+  // 알림 메시지 2초 후 사라지게 함
+  setTimeout(() => {
+    notification.style.opacity = '0';
+    setTimeout(() => {
+      notification.remove();
+    }, 2000);
+  }, 2000);
 }
 
-
 function loadSavedMessages() {
-  const savedMessage = localStorage.getItem('workplaceMessage');
-  const messageArea = document.getElementById('workplaceMessageArea'); // You'll need this element in your HTML
-  if (savedMessage) {
-    messageArea.value = savedMessage;
+  // 각 텍스트 영역에 저장된 메시지 로드
+  const bossMessage = localStorage.getItem('bossMessage');
+  const teamMessage = localStorage.getItem('teamMessage');
+  
+  if (bossMessage) {
+    document.getElementById('bossMessage').value = bossMessage;
+  }
+  
+  if (teamMessage) {
+    document.getElementById('teamMessage').value = teamMessage;
   }
 }
 

@@ -88,10 +88,6 @@
       <div class="result-container" id="medicineResult">
         <!-- 약 추천 결과가 여기에 표시됩니다 -->
       </div>
-      <div class="nav-buttons">
-        <button class="nav-btn" onclick="showPage('main')">이전</button>
-        <button class="nav-btn" onclick="showMedicineResult()">다음</button>
-      </div>
     </div>
   </div>
 
@@ -106,14 +102,14 @@
       <textarea id="bossMessage" class="message-textarea">안녕하세요, OOO님. 제가 오늘 생리통이 있어 업무 능률이 조금 떨어질 수 있습니다. 이해해 주시면 감사하겠습니다.</textarea>
       <div class="button-group">
         <button class="action-btn" onclick="copyToClipboard('bossMessage')">복사하기</button>
-        <button class="action-btn" onclick="editMessage('bossMessage')">수정하기</button>
+        <button class="action-btn" data-target="bossMessage" onclick="editMessage('bossMessage')">수정하기</button>
       </div>
 
       <h2>팀원/친구들에게 보내는 메시지</h2>
       <textarea id="teamMessage" class="message-textarea">안녕, 오늘 생리통이 있어서 컨디션이 좋지 않아. 미안하지만 약간 쉬어가며 일해도 될까?</textarea>
       <div class="button-group">
         <button class="action-btn" onclick="copyToClipboard('teamMessage')">복사하기</button>
-        <button class="action-btn" onclick="editMessage('teamMessage')">수정하기</button>
+        <button class="action-btn" data-target="teamMessage" onclick="editMessage('teamMessage')">수정하기</button>
       </div>
 
       <button class="policy-btn" onclick="showPage('policy')">만약에 안 된다면 법적/정책으로 보장 받을 수 있는 정보 보기</button>
