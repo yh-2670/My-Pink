@@ -1,10 +1,10 @@
-
 :root {
   --primary-color: #8a56ac;
   --secondary-color: #f2e7fa;
   --accent-color: #c8a2e5;
   --text-color: #333;
   --light-gray: #f5f5f5;
+  --light-purple: #F1EFFE;
   --border-radius: 20px;
 }
 
@@ -16,7 +16,7 @@
 }
 
 body {
-  background-color: var(--light-gray);
+  background-color: var(--light-purple);
   color: var(--text-color);
   max-width: 100%;
   overflow-x: hidden;
@@ -69,8 +69,6 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 20px 0 40px;
-  padding: 0 20px;
 }
 
 .hero-graphic {
@@ -81,15 +79,22 @@ h2 {
 }
 
 .hero-icon {
-  width: 150px;
   height: 150px;
   animation: float 3s ease-in-out infinite;
 }
 
 @keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 .hero-text {
@@ -123,7 +128,7 @@ h2 {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 .menu-card:nth-child(1) {
@@ -144,7 +149,7 @@ h2 {
 
 .menu-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .card-tag {
