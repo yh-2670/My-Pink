@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>생리대 종류</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <div class="page active">
+    <div class="page-header">
+      <a href="index.html" class="back-btn">←</a>
+      <h1>생리대 직접 추천해줄게요!</h1>
+    </div>
+    <div class="button-grid pad-grid">
+      <button class="pad-btn" onclick="showPadRecommendation('absorption')">흡수량</button>
+      <button class="pad-btn" onclick="showPadRecommendation('smell')">냄새</button>
+      <button class="pad-btn" onclick="showPadRecommendation('comfort')">착용감</button>
+      <button class="pad-btn" onclick="showPadRecommendation('size')">사이즈</button>
+    </div>
+    <div id="padResult" class="pad-result">
+      <!-- 생리대 추천 결과가 여기에 표시됩니다 -->
+    </div>
+  </div>
+  <script src="pads.js"></script>
+</body>
+</html>
