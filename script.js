@@ -10,10 +10,10 @@ function showPage(pageId) {
   document.getElementById(pageId).classList.add('active');
 
   // 페이지별 초기화
-  if (pageId === 'painkillers') {
+  if (pageId === 'recommend') {
     // 통증 수준 기본값을 1로 설정
     painSlider.value = 1;
-    painValue.textContent = 1;
+    painLevel.textContent = 1;
     showMedicineResult(1);
   } else if (pageId === 'guide') {
     initCards();
@@ -24,18 +24,62 @@ function showPage(pageId) {
 }
 
 // 생리통약 관련 기능
-const painSlider = document.getElementById('painLevel');
-const painValue = document.getElementById('painValue');
-const resultContainer = document.getElementById('medicineResult');
+const painSlider = document.getElementById('painSlider');
+const painLevel = document.getElementById('painLevel');
+const sliderProgress = document.querySelector('.slider-progress');
+const recommendationTitle = document.querySelector('.recommendation-title');
+const recommendationList = document.querySelector('.recommendation-list');
+const actionButton = document.querySelector('.action-button');
+
+// 설명을 리스트 내에 저장 
+const painLevels = [
+  { // Level 0
+    title: "통증 없음 (단계 0/10)",
+    symptoms: [
+      "• 특별한 통증이 없어요",
+      "• 평소와 같은 컨디션이에요",
+      "• 약을 복용할 필요가 없어요"
+    ]
+  },
+  { // Level 1-3
+    title: "약한 통증 (단계 1-3/10)",
+    symptoms: [
+      "• 허리가 약간 뻐근해요",
+      "• 배가 살짝 콕콕거려요",
+      "• 일상생활에 지장은 없어요",
+      "• 간혹 피곤함을 느껴요"
+    ]
+  },
+  { // Level 4-6
+    title: "중간 통증 (단계 4-6/10)",
+    symptoms: [
+      "• 허리가 뻐근해요",
+      "• 배가 살짝 콕콕거려요",
+      "• 일상생활이 약간 불편해요",
+      "• 피로감이 느껴져요",
+      "• 진통제가 필요할 수 있어요"
+    ]
+  },
+  { // Level 7-10
+    title: "심한 통증 (단계 7-10/10)",
+    symptoms: [
+      "• 허리와 아랫배가 매우 아파요",
+      "• 움직이기 어려워요",
+      "• 일상생활이 힘들어요",
+      "• 메스꺼움이나 구토가 있을 수 있어요",
+      "• 처방된 진통제가 필요해요"
+    ]
+  }
+];
 
 // 슬라이더 값 변경 시 표시 및 결과 즉시 업데이트
 if (painSlider) {
   painSlider.addEventListener('input', function() {
     const level = parseInt(this.value);
-    painValue.textContent = level;
+    painLevel.textContent = level;
     showMedicineResult(level);
   });
-  
+
   // 페이지 로드 시 기본값 표시
   window.addEventListener('DOMContentLoaded', function() {
     const initialLevel = parseInt(painSlider.value);
@@ -44,38 +88,43 @@ if (painSlider) {
 }
 
 // 생리통약 결과 표시
-function showMedicineResult(level) {
-  let recommendation = '';
+function showMedicineResult(value) {
+  //값 가져오기 
+  painLevel.textContent = value;
 
-  if (level >= 1 && level <= 3) {
-    recommendation = `
-      <h3>약한 통증 (단계 ${level}/10)</h3>
-      <p><strong>추천 약물:</strong> 아세트아미노펜 계열(타이레놀 등)</p>
-      <p><strong>복용 시간:</strong> 식후 또는 식간에 복용하세요.</p>
-      <p><strong>효과 시작:</strong> 복용 후 약 30분~1시간 내 효과가 나타납니다.</p>
-      <p><strong>TIP:</strong> 핫팩이나 따뜻한 물로 하복부를 데워주면 효과적입니다.</p>
-    `;
-  } else if (level >= 4 && level <= 6) {
-    recommendation = `
-      <h3>중간 통증 (단계 ${level}/10)</h3>
-      <p><strong>추천 약물:</strong> 이부프로펜 계열(이지엔, 펜잘, 브루펜 등)</p>
-      <p><strong>복용 시간:</strong> 가능하면 식후에 복용하세요. 공복 시 위장 장애가 생길 수 있습니다.</p>
-      <p><strong>효과 시작:</strong> 복용 후 약 20~30분 내 효과가 나타납니다.</p>
-      <p><strong>TIP:</strong> 통증이 시작되기 전, 생리 시작 직후 복용하면 더 효과적입니다.</p>
-    `;
-  } else {
-    recommendation = `
-      <h3>심한 통증 (단계 ${level}/10)</h3>
-      <p><strong>추천 약물:</strong> 나프록센 계열(나프록센, 알레베) 또는 진통제 복합제(게보린 등)</p>
-      <p><strong>복용 시간:</strong> 반드시 식후에 복용하세요.</p>
-      <p><strong>효과 시작:</strong> 복용 후 약 30분~1시간 내 효과가 나타납니다.</p>
-      <p><strong>TIP:</strong> 통증이 심각하면 산부인과 방문을 고려하세요. 내복약 외에도 진통 주사나 다른 치료법을 고려할 수 있습니다.</p>
-      <p><strong>주의:</strong> 심한 통증이 지속되면 자궁내막증 등의 질환일 수 있으니 반드시 산부인과 검진을 받으세요.</p>
-    `;
+  // Progress 업데이트 
+  const percentage = (value / 10) * 100;
+  sliderProgress.style.width = `${percentage}%`;
+
+  // 카테고리 바꾸기 
+  // !! value가 0 이면, levelIndex 도 0
+  // 1~ 3 사이면 1, 
+  // 4 ~ 6 사이면 2
+  // 그 외 3 
+  if (value == 0) {
+    levelIndex = 0
+  }
+  else if (value >= 1 && value <= 3) {
+    levelIndex = 1
+  }
+  else if (value >= 4 && value <= 6) {
+    levelIndex = 2
+  }
+  else {
+    levelIndex = 3
   }
 
-  resultContainer.innerHTML = recommendation;
-  resultContainer.style.display = 'block';
+  // 텍스트 바꾸기 
+  const level = painLevels[levelIndex];
+  recommendationTitle.innerHTML = level.title.replace(/단계\s\d+(-\d+)?\/10/, `단계 <span id="painLevel">${value}</span>/10`);
+
+  //리스트 값 변경
+  recommendationList.innerHTML = '';
+  level.symptoms.forEach(symptom => {
+    const li = document.createElement('li');
+    li.textContent = symptom;
+    recommendationList.appendChild(li);
+  });
 }
 
 // 메시지 관련 기능
@@ -96,10 +145,10 @@ function editMessage(elementId) {
 function saveMessage(elementId) {
   const textarea = document.getElementById(elementId);
   const message = textarea.value;
-  
+
   // 해당 ID의 메시지를 localStorage에 저장
   localStorage.setItem(elementId, message);
-  
+
   // 저장 완료 알림 (alert 형식으로 변경)
   alert('저장되었습니다!');
 }
@@ -108,11 +157,11 @@ function loadSavedMessages() {
   // 각 텍스트 영역에 저장된 메시지 로드
   const bossMessage = localStorage.getItem('bossMessage');
   const teamMessage = localStorage.getItem('teamMessage');
-  
+
   if (bossMessage) {
     document.getElementById('bossMessage').value = bossMessage;
   }
-  
+
   if (teamMessage) {
     document.getElementById('teamMessage').value = teamMessage;
   }
@@ -124,7 +173,7 @@ function showPadRecommendation(type) {
   let recommendation = '';
   let hashtags = '';
 
-  switch(type) {
+  switch (type) {
     case 'absorption':
       hashtags = '<span class="hashtag">#직접 써봤어요!</span> <span class="hashtag">#흡수량</span>';
       recommendation = `
