@@ -12,7 +12,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Arial', sans-serif;
+  font-family: "IBM Plex Sans KR", sans-serif;
 }
 
 body {
@@ -44,6 +44,7 @@ body {
   font-size: 24px;
   cursor: pointer;
   margin-right: 15px;
+  width: 30px;
 }
 
 .title {
