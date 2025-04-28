@@ -9,40 +9,22 @@
 </head>
 <body>
   <div class="page active">
-    <div class="homee">
-      <img id="home" src="images/home.png" alt="to home" onclick="showPage('main')">
+    <div class="page-header">
+      <a href="index.html" class="back-btn">←</a>
+      <h1>생리통약 추천</h1>
     </div>
-    <h1 id="recommendtitle">생리통약 추천</h1>
-    <div class="pain-section">
-      <div class="pain-question">
-        <h2>아픈 정도는?!</h2>
-      </div>
-
-      <div class="slider-container">
-        <span class="slider-value-left">0</span>
-        <div class="slider-wrapper">
-          <input type="range" min="0" max="10" value="4" class="pain-slider" id="painSlider">
-          <div class="slider-progress"></div>
-        </div>
-        <span class="slider-value-right">10</span>
-      </div>
-
-      <div class="tip-section">
-        <p class="tip">TIP: 1~3은 복통, <br>4~6 일상에서 불편함이 있는 정도의 피로감,<br>7~10 은 움직이기 어려운 통증</p>
-        <p class="disclaimer">*산부인과 전문의의 자문을 구했으나, 전문가별 소견은 다르니<br>통증이 심하다면 병원에 방문하세요!</p>
-      </div>
-    </div>
-
-    <div class="recommendation-card">
-      <h2 class="recommendation-title">약한 통증 (단계 <span id="painLevel">4</span>/10)</h2>
-      <ul class="recommendation-list">
-      </ul>
-      <div class="action-button-container">
-        <p class="action-message">이 증상이 맞나요? 아니라면 조정해보세요...!</p>
-        <button class="action-button">맞아요!</button>
+    <div class="pain-slider-container">
+      <input type="range" min="1" max="10" value="5" class="pain-slider" id="painLevel">
+      <div class="pain-value">통증 정도: <span id="painValue">5</span></div>
+      <p class="tip">
+        TIP: 1~3은 복통, 4~6은 일상생활 가능 정도의 통증, 7~10은 움직이기 어려운 통증<br>
+        <small>* 산부인과 전문의의 자문을 구했으나, 전문가별 소견은 다르니 통증이 심하다면 병원을 방문하세요!</small>
+      </p>
+      <div class="result-container" id="medicineResult">
+        <!-- 약 추천 결과가 여기에 표시됩니다 -->
       </div>
     </div>
   </div>
-  <script src="script.js"></script>
+  <script src="painkillers.js"></script>
 </body>
 </html>
