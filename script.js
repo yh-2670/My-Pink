@@ -433,8 +433,14 @@ function initCards() {
   });
 }
 
-// 페이지 로드 시 초기화
-document.addEventListener('DOMContentLoaded', function() {
-  // 메인 페이지 표시
-  showPage('main');
+document.addEventListener('DOMContentLoaded', function () {
+  showPage('main'); // 초기 페이지
+
+  // 페이지 이동 버튼 바인딩
+  document.querySelectorAll('[data-page]').forEach(el => {
+    el.addEventListener('click', function () {
+      const targetPage = this.getAttribute('data-page');
+      showPage(targetPage);
+    });
+  });
 });
