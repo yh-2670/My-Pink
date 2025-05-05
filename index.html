@@ -19,7 +19,7 @@
       <img src="images/title.png" alt="NO WHISPERING JUST UNDERSTANDING" class="hero-icon">
     </div>
     <div class="card-grid">
-      <div class="menu-card" data-page="recommend">
+      <div class="menu-card" onclick="showPage('recommend')">
         <div class="card-tag">생리통약 추천</div>
         <div class="card-illustration">
           <img src="images/icon_pills.png" alt="Medicine Icon">
@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <div class="menu-card" data-page="workplace">
+      <div class="menu-card" onclick="showPage('workplace')">
         <div class="card-tag">직장 내 생리통 대처법</div>
         <div class="card-illustration">
           <img src="images/icon_workspace.png" alt="Workplace Icon">
@@ -41,7 +41,7 @@
         </div>
       </div>
 
-      <div class="menu-card" data-page="pads">
+      <div class="menu-card" onclick="showPage('pads')">
         <div class="card-tag">생리대 종류</div>
         <div class="card-illustration">
           <img src="images/icon_periodpad.png" alt="Pad Icon">
@@ -52,7 +52,7 @@
         </div>
       </div>
 
-      <div class="menu-card" data-page="guide">
+      <div class="menu-card" onclick="showPage('guide')">
         <div class="card-tag">기본 백서</div>
         <div class="card-illustration">
           <img src="images/icon_guide.png" alt="Guide Icon">
@@ -72,7 +72,7 @@
   <!-- 생리통 약 추천 페이지 -->
   <div id="recommend" class="page active">
     <div class="homee">
-      <img id="home" src="images/home.png" data-page="main">
+      <img id="home" src="images/home.png" onclick="showPage('main')">
     </div>
     <h1 id="recommendtitle">생리통약 추천</h1>
     <div class="pain-section">
@@ -101,7 +101,7 @@
       </ul>
       <div class="action-button-container">
         <p class="action-message">이 증상이 맞나요? 아니라면 조정해보세요...!</p>
-        <button class="action-button" data-page="prescription">맞아요!</button>
+        <button class="action-button" onclick="showPage('prescription')">맞아요!</button>
       </div>
     </div>
   </div>
@@ -109,7 +109,7 @@
   <!-- 처방전 페이지 -->
   <div id="prescription" class="page">
     <div class="homee">
-      <img id="home" src="images/home.png" data-page="main">
+      <img id="home" src="images/home.png" onclick="showPage('main')">
     </div>
     <h1 id="recommendtitle">진단 결과</h1>
     <div class="pain-section">
@@ -122,18 +122,18 @@
       <textarea id="bossMessage"
         class="message-textarea">안녕하세요, OOO님. 제가 오늘 생리통이 있어 업무 능률이 조금 떨어질 수 있습니다. 이해해 주시면 감사하겠습니다.</textarea>
       <div class="button-group">
-        <button class="action-btn copy-btn" data-target="bossMessage">복사하기</button>
-        <button class="action-btn save-btn" data-target="bossMessage">저장하기</button>
+        <button class="action-btn" onclick="copyToClipboard('bossMessage')">복사하기</button>
+        <button class="action-btn" data-target="bossMessage" onclick="saveMessage('bossMessage')">저장하기</button>
       </div>
 
       <h2>📌 팀원/친구들에게 보내는 메시지</h2>
       <textarea id="teamMessage" class="message-textarea">안녕, 오늘 생리통이 있어서 컨디션이 좋지 않아. 미안하지만 약간 쉬어가며 일해도 될까?</textarea>
       <div class="button-group">
-        <button class="action-btn copy-btn" data-target="teamMessage">복사하기</button>
-        <button class="action-btn save-btn" data-target="teamMessage">저장하기</button>
+        <button class="action-btn" onclick="copyToClipboard('teamMessage')">복사하기</button>
+        <button class="action-btn" data-target="teamMessage" onclick="saveMessage('teamMessage')">저장하기</button>
       </div>
 
-      <button class="policy-btn" data-page="policy">만약에 안 된다면 법적/정책으로 보장 받을 수 있는 정보 보기</button>
+      <button class="policy-btn" onclick="showPage('policy')">만약에 안 된다면 법적/정책으로 보장 받을 수 있는 정보 보기</button>
     </div>
   </div>
 
@@ -142,7 +142,7 @@
   <!-- 직장 내 생리통 대처법 페이지 -->
   <div id="workplace" class="page">
     <div class="homee">
-      <img id="home" src="images/home.png" data-page="main">
+      <img id="home" src="images/home.png" onclick="showPage('main')">
     </div>
     <h1 id="recommendtitle">대처법</h1>
     <div class="pain-section">
@@ -155,25 +155,25 @@
       <textarea id="bossMessage"
         class="message-textarea">안녕하세요, OOO님. 제가 오늘 생리통이 있어 업무 능률이 조금 떨어질 수 있습니다. 이해해 주시면 감사하겠습니다.</textarea>
       <div class="button-group">
-        <button class="action-btn copy-btn" data-target="bossMessage">복사하기</button>
-        <button class="action-btn save-btn" data-target="bossMessage">저장하기</button>
+        <button class="action-btn" onclick="copyToClipboard('bossMessage')">복사하기</button>
+        <button class="action-btn" data-target="bossMessage" onclick="saveMessage('bossMessage')">저장하기</button>
       </div>
 
       <h2>📌 팀원/친구들에게 보내는 메시지</h2>
       <textarea id="teamMessage" class="message-textarea">안녕, 오늘 생리통이 있어서 컨디션이 좋지 않아. 미안하지만 약간 쉬어가며 일해도 될까?</textarea>
       <div class="button-group">
-        <button class="action-btn copy-btn" data-target="teamMessage">복사하기</button>
-        <button class="action-btn save-btn" data-target="teamMessage">저장하기</button>
+        <button class="action-btn" onclick="copyToClipboard('teamMessage')">복사하기</button>
+        <button class="action-btn" data-target="teamMessage" onclick="saveMessage('teamMessage')">저장하기</button>
       </div>
 
-      <button class="policy-btn" data-page="policy">만약에 안 된다면 법적/정책으로 보장 받을 수 있는 정보 보기</button>
+      <button class="policy-btn" onclick="showPage('policy')">만약에 안 된다면 법적/정책으로 보장 받을 수 있는 정보 보기</button>
     </div>
   </div>
 
   <!-- 정책 정보 페이지 -->
   <div id="policy" class="page">
     <div class="homee">
-      <img id="home" src="images/home.png" data-page="main">
+      <img id="home" src="images/home.png" onclick="showPage('main')">
     </div>
     <h1 id="recommendtitle">생리휴가 및 관련 정책</h1>
     <div class="pain-section">
@@ -271,7 +271,7 @@
   <!-- 생리대 종류 페이지 -->
   <div id="pads" class="page">
     <div class="homee">
-      <img id="home" src="images/home.png" data-page="main">
+      <img id="home" src="images/home.png" onclick="showPage('main')">
     </div>
     <h1 id="recommendtitle">생리대 추천</h1>
     <div class="pain-section">
@@ -280,10 +280,10 @@
       </div>
     </div>
     <div class="button-grid pad-grid">
-      <button class="pad-btn" data-recommendation="absorption">흡수량</button>
-      <button class="pad-btn" data-recommendation="smell">냄새</button>
-      <button class="pad-btn" data-recommendation="comfort">착용감</button>
-      <button class="pad-btn" data-recommendation="size">사이즈</button>
+      <button class="pad-btn" onclick="showPadRecommendation('absorption')">흡수량</button>
+      <button class="pad-btn" onclick="showPadRecommendation('smell')">냄새</button>
+      <button class="pad-btn" onclick="showPadRecommendation('comfort')">착용감</button>
+      <button class="pad-btn" onclick="showPadRecommendation('size')">사이즈</button>
     </div>
     <div id="padResult" class="pad-result">
       <!-- 생리대 추천 결과가 여기에 표시됩니다 -->
@@ -293,7 +293,7 @@
   <!-- 초경 전/남자들을 위한 기본 백서 페이지 -->
   <div id="guide" class="page">
     <div class="homee">
-      <img id="home" src="images/home.png" data-page="main">
+      <img id="home" src="images/home.png" onclick="showPage('main')">
     </div>
     <h1 id="recommendtitle">생리 기본 백서</h1>
     <div class="pain-section">

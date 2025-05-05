@@ -437,46 +437,4 @@ function initCards() {
 document.addEventListener('DOMContentLoaded', function() {
   // 메인 페이지 표시
   showPage('main');
-  
-  // 메뉴 카드 클릭 이벤트
-  document.querySelectorAll('.menu-card').forEach(card => {
-    card.addEventListener('click', (e) => {
-      const page = card.dataset.page;
-      if (page) showPage(page);
-    });
-  });
-
-  // 홈 버튼 클릭 이벤트
-  document.querySelectorAll('[data-page="main"]').forEach(btn => {
-    btn.addEventListener('click', () => showPage('main'));
-  });
-
-  // 생리대 추천 버튼 클릭 이벤트
-  document.querySelectorAll('.pad-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const type = btn.dataset.recommendation;
-      if (type) showPadRecommendation(type);
-    });
-  });
-
-  // 복사 버튼 클릭 이벤트
-  document.querySelectorAll('.copy-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.target;
-      if (target) copyToClipboard(target);
-    });
-  });
-
-  // 저장 버튼 클릭 이벤트
-  document.querySelectorAll('.save-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.target;
-      if (target) saveMessage(target);
-    });
-  });
-
-  // 카드 초기화 (guide 페이지용)
-  if (document.querySelector('.card')) {
-    initCards();
-  }
 });
