@@ -130,55 +130,29 @@ function showMedicineResult(value) {
 // 메시지 관련 기능
 function copyToClipboard(elementId) {
   const textarea = document.getElementById(elementId);
-  if (!textarea) return;
-  
   textarea.select();
-  try {
-    navigator.clipboard.writeText(textarea.value).then(() => {
-      alert('메시지가 클립보드에 복사되었습니다!');
-    }).catch(err => {
-      console.error('클립보드 복사 실패:', err);
-    });
-  } catch (err) {
-    console.error('클립보드 복사 실패:', err);
-  }
+  document.execCommand('copy');
+
+  // 복사 성공 알림
+  alert('메시지가 클립보드에 복사되었습니다!');
 }
 
 function editMessage(elementId) {
   const textarea = document.getElementById(elementId);
-  if (textarea) textarea.focus();
+  textarea.focus();
 }
 
 function saveMessage(elementId) {
   const textarea = document.getElementById(elementId);
-  if (!textarea) return;
-  
   const message = textarea.value;
-  try {
-    localStorage.setItem(elementId, message);
-    alert('저장되었습니다!');
-  } catch (err) {
-    console.error('저장 실패:', err);
-    alert('저장에 실패했습니다.');
-  }
-}
 
-// 페이지 로드 시 이벤트 리스너 추가
-document.addEventListener('DOMContentLoaded', function() {
-  const actionButtons = document.querySelectorAll('.action-btn');
-  actionButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      const action = this.textContent.trim();
-      const targetId = this.closest('.button-group').previousElementSibling.id;
-      
-      if (action === '복사하기') {
-        copyToClipboard(targetId);
-      } else if (action === '저장하기') {
-        saveMessage(targetId);
-      }
-    });
-  });
-});
+  // 해당 ID의 메시지를 localStorage에 저장
+  localStorage.setItem(elementId, message);
+  console.log(localStorage);
+
+  // 저장 완료 알림 (alert 형식으로 변경)
+  alert('저장되었습니다!');
+}
 
 function loadSavedMessages() {
   // 각 텍스트 영역에 저장된 메시지 로드
