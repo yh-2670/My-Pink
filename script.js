@@ -19,7 +19,7 @@ function showPage(pageId) {
     initCards();
   } else if (pageId === 'workplace') {
     // 저장된 메시지 불러오기
-    loadSavedMessages();
+    setTimeout(loadSavedMessages, 0);
   }
 }
 
@@ -148,6 +148,7 @@ function saveMessage(elementId) {
 
   // 해당 ID의 메시지를 localStorage에 저장
   localStorage.setItem(elementId, message);
+  console.log(localStorage);
 
   // 저장 완료 알림 (alert 형식으로 변경)
   alert('저장되었습니다!');
@@ -433,12 +434,13 @@ function initCards() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+
+document.addEventListener('DOMContentLoaded', function() {
   showPage('main'); // 초기 페이지
 
   // 페이지 이동 버튼 바인딩
   document.querySelectorAll('[data-page]').forEach(el => {
-    el.addEventListener('click', function () {
+    el.addEventListener('click', function() {
       const targetPage = this.getAttribute('data-page');
       showPage(targetPage);
     });

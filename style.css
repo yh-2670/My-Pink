@@ -27,11 +27,6 @@ body {
   display: none;
   padding: 20px;
   min-height: 100vh;
-  max-width: 100%;
-  width: 100%;
-  box-sizing: border-box;
-  margin: 0 auto;
-  max-width: 800px;
 }
 
 .active {
@@ -567,8 +562,7 @@ h2 {
   box-shadow: var(--card-shadow);
   overflow: hidden;
   transition: all var(--transition-speed) ease;
-  margin-bottom: 5px;
-  /* 카드 사이 간격 추가 */
+  margin-bottom: 5px; /* 카드 사이 간격 추가 */
 }
 
 .card.expanded {
@@ -642,8 +636,7 @@ h2 {
 .card.expanded .card-body {
   padding: 20px;
   height: auto;
-  max-height: 1000px;
-  /* Large enough to contain content */
+  max-height: 1000px; /* Large enough to contain content */
 }
 
 .card-body p {
@@ -709,7 +702,6 @@ h2 {
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-
   .content-section,
   .content-image {
     flex: 100%;
