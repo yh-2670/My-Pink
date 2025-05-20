@@ -15,11 +15,13 @@ function showPage(pageId) {
     painSlider.value = 1;
     painLevel.textContent = 1;
     showMedicineResult(1);
-  } else if ((pageId === 'guide') || (pageId === 'policy')) {
-    initCards();
+  } else if (pageId === 'guide') {
+    loadCards('guide');
+  } else if (pageId === 'policy') {
+    loadCards('policy');
   } else if (pageId === 'workplace') {
     // 저장된 메시지 불러오기
-    setTimeout(loadSavedMessages, 0);
+    loadSavedMessages();
   }
 }
 
@@ -89,45 +91,110 @@ if (painSlider) {
 
 // 생리통약 결과 표시
 function showMedicineResult(value) {
-  //값 가져오기 
   painLevel.textContent = value;
-
-  // Progress 업데이트 
   const percentage = (value / 10) * 100;
   sliderProgress.style.width = `${percentage}%`;
 
-  // 카테고리 바꾸기 
-  // !! value가 0 이면, levelIndex 도 0
-  // 1~ 3 사이면 1, 
-  // 4 ~ 6 사이면 2
-  // 그 외 3 
-  if (value == 0) {
-    levelIndex = 0
-  }
-  else if (value >= 1 && value <= 3) {
-    levelIndex = 1
-  }
-  else if (value >= 4 && value <= 6) {
-    levelIndex = 2
-  }
-  else {
-    levelIndex = 3
+  let prescription = {};
+
+  if (value >= 0 && value <= 3) {
+    prescription = {
+      name: "아세트아미노펜 325-500mg",
+      effect: "효능: 경미한 생리통 완화, 가벼운 근육통 완화",
+      ingredient: "성분: 아세트아미노펜 325-500mg",
+      brands: "대표 약: 타이레놀, 써스펜, 펜잘",
+      dosage: [
+        "충분한 물과 함께 복용하세요",
+        "1회 1-2정, 하루 최대 4000mg(8정)을 초과하지 마세요.",
+        "간 손상 위험이 있으므로 술을 마신 후 복용을 피하세요.",
+        "황달, 피부 발진, 가려움증 등이 나타나면 즉시 복용을 중단하세요.",
+        "다른 아세트아미노펜 함유 제품(감기약 등)과 동시 복용 시 과다 복용 위험이 있습니다.",
+        "공복보다는 식후에 복용하는 것이 좋습니다."
+      ],
+      image: "images/acetaminophen.png"
+    };
+  } else if (value >= 4 && value <= 6) {
+    prescription = {
+      name: "이부프로펜 200mg",
+      effect: "효능: 생리통 완화, 근육통 및 관절통 완화",
+      ingredient: "성분: 이부프로펜 200mg",
+      brands: "대표 약: 부루펜, 애드빌, 이지엔6",
+      dosage: [
+        "식사 직후 또는 우유와 함께 복용하여 위장 자극을 줄이세요.",
+        "성인은 4-6시간 간격으로 1-2정, 하루 최대 6정까지 복용 가능합니다.",
+        "위장 출혈 위험이 있으니 위장 질환자는 복용 전 의사와 상담하세요.",
+        "고혈압, 심장질환, 신장질환이 있는 경우 복용 전 의사와 상담하세요.",
+        "임신 3기(임신 7개월 이후)에는 절대 복용하지 마세요.",
+        "아스피린이나 다른 NSAIDs 계열 약물과 함께 복용하지 마세요."
+
+      ],
+      image: "images/ibuprofen.png"
+    };
+  } else if (value >= 7) {
+    prescription = {
+      name: "나프록센 나트륨 250-500mg",
+      effect: "효능: 강한 생리통 완화, 심한 근육통 및 관절통 완화, 염증 억제",
+      ingredient: "성분: 나프록센 나트륨 250-500mg",
+      brands: "대표 약: 낙센, 탁센",
+      dosage: [
+        "반드시 식사와 함께 복용하여 위장 보호에 신경 쓰세요.",
+        "효과가 오래 지속되므로 8-12시간 간격으로 복용하세요.",
+        "심혈관계 부작용(심장마비, 뇌졸중) 위험이 있으니 장기 복용은 피하세요.",
+        "위장 출혈 위험이 높으므로 위염, 위궤양 환자는 복용을 피하세요.",
+        "부종이나 체중 증가가 나타날 수 있으니 주의하세요.",
+        "아스피린 알레르기가 있는 경우 사용하지 마세요."
+
+      ],
+      image: "images/naproxen.png"
+    };
   }
 
-  // 텍스트 바꾸기 
-  const level = painLevels[levelIndex];
+  // Update prescription page content
+  document.getElementById('medicineName').textContent = prescription.name;
+  document.getElementById('medicineEffect').textContent = prescription.effect;
+  document.getElementById('medicineIngredient').textContent = prescription.ingredient;
+  document.getElementById('medicineBrands').textContent = prescription.brands;
+  document.getElementById('medicineImage').src = prescription.image;
+
+
+  const dosageList = document.getElementById('dosageList');
+  dosageList.innerHTML = '';
+  prescription.dosage.forEach(item => {
+    const li = document.createElement('li');
+    li.textContent = item;
+    dosageList.appendChild(li);
+  });
+
+  // 진단 결과 업데이트 
+  const level = painLevels[value >= 7 ? 3 : value >= 4 ? 2 : value >= 1 ? 1 : 0];
   recommendationTitle.innerHTML = level.title.replace(/단계\s\d+(-\d+)?\/10/, `단계 <span id="painLevel">${value}</span>/10`);
 
-  //리스트 값 변경
   recommendationList.innerHTML = '';
   level.symptoms.forEach(symptom => {
     const li = document.createElement('li');
     li.textContent = symptom;
     recommendationList.appendChild(li);
   });
+
+  // 레벨 0일 경우 버튼 없애기 
+  const actionButtonContainer = document.querySelector('.action-button-container');
+  if (actionButtonContainer) {
+    actionButtonContainer.style.display = value === 0 ? 'none' : 'flex';
+  }
 }
 
 // 메시지 관련 기능
+const btn_copy_boss = document.getElementById("btn_copy_boss");
+const btn_save_boss = document.getElementById("btn_save_boss");
+const btn_copy_team = document.getElementById("btn_copy_team");
+const btn_save_team = document.getElementById("btn_save_team");
+btn_copy_boss.addEventListener('click', () => copyToClipboard("bossMessage"));
+btn_save_boss.addEventListener('click', () => saveMessage("bossMessage"));
+btn_copy_team.addEventListener('click', () => copyToClipboard("teamMessage"));
+btn_save_team.addEventListener('click', () => saveMessage("teamMessage"));
+
+
+
 function copyToClipboard(elementId) {
   const textarea = document.getElementById(elementId);
   textarea.select();
@@ -169,189 +236,205 @@ function loadSavedMessages() {
 }
 
 // 생리대 추천 관련 기능
+const btn_regular = document.getElementById("btn_regular");
+const btn_overnight = document.getElementById("btn_overnight");
+
+btn_regular.addEventListener('click', () => showPadRecommendation('regular'));
+btn_overnight.addEventListener('click', () => showPadRecommendation('overnight'));
+
+
 function showPadRecommendation(type) {
   const resultContainer = document.getElementById('padResult');
   let recommendation = '';
-  let hashtags = '';
 
-  switch (type) {
-    case 'absorption':
-      hashtags = '<span class="hashtag">#직접 써봤어요!</span> <span class="hashtag">#흡수량</span>';
-      recommendation = `
-        <h3>${hashtags}</h3>
-        <div class="product-list">
-          <div class="product-item">
-            <span class="product-name">01. 화이트 울트라 슬림 오버나이트</span>
-            <div class="popularity-bar">
-              <div class="popularity-fill" style="width: 85%; background-color: #4e97ff;"></div>
-            </div>
-            <span class="percentage" style="background-color: #4e97ff;">85%</span>
-          </div>
-          <div class="product-item">
-            <span class="product-name">02. 내추럴 코튼 울트라 롱</span>
-            <div class="popularity-bar">
-              <div class="popularity-fill" style="width: 72%; background-color: #4ecbff;"></div>
-            </div>
-            <span class="percentage" style="background-color: #4ecbff;">72%</span>
-          </div>
-          <div class="product-item">
-            <span class="product-name">03. 쏘피 한결 수퍼롱</span>
-            <div class="popularity-bar">
-              <div class="popularity-fill" style="width: 65%; background-color: #aa86ff;"></div>
-            </div>
-            <span class="percentage" style="background-color: #aa86ff;">65%</span>
-          </div>
-          <div class="product-item">
-            <span class="product-name">04. 릴리안 오버나이트</span>
-            <div class="popularity-bar">
-              <div class="popularity-fill" style="width: 60%; background-color: #ff9e6d;"></div>
-            </div>
-            <span class="percentage" style="background-color: #ff9e6d;">60%</span>
-          </div>
-        </div>
-      `;
-      break;
-    case 'smell':
-      hashtags = '<span class="hashtag">#직접 써봤어요!</span> <span class="hashtag">#냄새</span>';
-      recommendation = `
-        <h3>${hashtags}</h3>
-        <div class="product-list">
-          <div class="product-item">
-            <span class="product-name">01. 화이트 탈취 기능성</span>
-            <div class="popularity-bar">
-              <div class="popularity-fill" style="width: 88%; background-color: #4e97ff;"></div>
-            </div>
-            <span class="percentage" style="background-color: #4e97ff;">88%</span>
-          </div>
-          <div class="product-item">
-            <span class="product-name">02. 유기농 순면 생리대</span>
-            <div class="popularity-bar">
-              <div class="popularity-fill" style="width: 75%; background-color: #4ecbff;"></div>
-            </div>
-            <span class="percentage" style="background-color: #4ecbff;">75%</span>
-          </div>
-          <div class="product-item">
-            <span class="product-name">03. 허브 코튼 오버나이트</span>
-            <div class="popularity-bar">
-              <div class="popularity-fill" style="width: 62%; background-color: #aa86ff;"></div>
-            </div>
-            <span class="percentage" style="background-color: #aa86ff;">62%</span>
-          </div>
-          <div class="product-item">
-            <span class="product-name">04. 라네이처 소취 기능</span>
-            <div class="popularity-bar">
-              <div class="popularity-fill" style="width: 54%; background-color: #ff9e6d;"></div>
-            </div>
-            <span class="percentage" style="background-color: #ff9e6d;">54%</span>
-          </div>
-        </div>
-      `;
-      break;
-    case 'comfort':
-      hashtags = '<span class="hashtag">#직접 써봤어요!</span> <span class="hashtag">#착용감</span>';
-      recommendation = `
-        <h3>${hashtags}</h3>
-        <div class="product-list">
-          <div class="product-item">
-            <span class="product-name">01. 유기농 순면 소프트</span>
-            <div class="popularity-bar">
-              <div class="popularity-fill" style="width: 92%; background-color: #4e97ff;"></div>
-            </div>
-            <span class="percentage" style="background-color: #4e97ff;">92%</span>
-          </div>
-          <div class="product-item">
-            <span class="product-name">02. 쏘피 실크 초슬림</span>
-            <div class="popularity-bar">
-              <div class="popularity-fill" style="width: 78%; background-color: #4ecbff;"></div>
-            </div>
-            <span class="percentage" style="background-color: #4ecbff;">78%</span>
-          </div>
-          <div class="product-item">
-            <span class="product-name">03. 내추럴 코튼 에어핏</span>
-            <div class="popularity-bar">
-              <div class="popularity-fill" style="width: 71%; background-color: #aa86ff;"></div>
-            </div>
-            <span class="percentage" style="background-color: #aa86ff;">71%</span>
-          </div>
-          <div class="product-item">
-            <span class="product-name">04. 좋은느낌 에어슬림</span>
-            <div class="popularity-bar">
-              <div class="popularity-fill" style="width: 65%; background-color: #ff9e6d;"></div>
-            </div>
-            <span class="percentage" style="background-color: #ff9e6d;">65%</span>
-          </div>
-        </div>
-      `;
-      break;
-    case 'size':
-      hashtags = '<span class="hashtag">#직접 써봤어요!</span> <span class="hashtag">#사이즈</span>';
-      recommendation = `
-        <h3>${hashtags}</h3>
-        <div class="product-list">
-          <div class="product-item">
-            <span class="product-name">01. 대형 오버나이트 롱패드</span>
-            <div class="popularity-bar">
-              <div class="popularity-fill" style="width: 90%; background-color: #4e97ff;"></div>
-            </div>
-            <span class="percentage" style="background-color: #4e97ff;">90%</span>
-          </div>
-          <div class="product-item">
-            <span class="product-name">02. 중형 데이타임 패드</span>
-            <div class="popularity-bar">
-              <div class="popularity-fill" style="width: 82%; background-color: #4ecbff;"></div>
-            </div>
-            <span class="percentage" style="background-color: #4ecbff;">82%</span>
-          </div>
-          <div class="product-item">
-            <span class="product-name">03. 소형 라이너</span>
-            <div class="popularity-bar">
-              <div class="popularity-fill" style="width: 75%; background-color: #aa86ff;"></div>
-            </div>
-            <span class="percentage" style="background-color: #aa86ff;">75%</span>
-          </div>
-          <div class="product-item">
-            <span class="product-name">04. 탐폰 레귤러</span>
-            <div class="popularity-bar">
-              <div class="popularity-fill" style="width: 58%; background-color: #ff9e6d;"></div>
-            </div>
-            <span class="percentage" style="background-color: #ff9e6d;">58%</span>
-          </div>
-        </div>
-      `;
-      break;
+  if (type === 'regular') {
+    recommendation = `
+      <h2>일반 생리대</h2>
+      <table class="pad-table">
+        <thead>
+          <tr>
+            <th>브랜드관</th>
+            <th>제품 이름</th>
+            <th>별점</th>
+            <th>해시태그</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>암웨이</td>
+            <td>후아 내추럴 순면커버 생리대 대형</td>
+            <td><div class="pad-rating"><span>★</span>4.65 (252명)</div></td>
+            <td><div class="pad-hashtags"><span class="pad-hashtag">#32ea</span><span class="pad-hashtag">#12,000원</span><span class="pad-hashtag">#대형생리대</span><span class="pad-hashtag">부문</span><span class="pad-hashtag">3위</span></div></td>
+          </tr>
+          <tr>
+            <td>라엘</td>
+            <td>유기농 순면커버 생리대 중형</td>
+            <td><div class="pad-rating"><span>★</span>4.52 (378명)</div></td>
+            <td><div class="pad-hashtags"><span class="pad-hashtag">#10ea</span><span class="pad-hashtag">#8,500원</span><span class="pad-hashtag">#중형생리대</span><span class="pad-hashtag">부문</span><span class="pad-hashtag">2위</span></div></td>
+          </tr>
+          <tr>
+            <td>치유비</td>
+            <td>유기농 순면 생리대 대형</td>
+            <td><div class="pad-rating"><span>★</span>4.42 (83명)</div></td>
+            <td><div class="pad-hashtags"><span class="pad-hashtag">#4ea</span><span class="pad-hashtag">#7,900원</span><span class="pad-hashtag">#대형생리대</span><span class="pad-hashtag">부문</span><span class="pad-hashtag">1위</span></div></td>
+          </tr>
+          <tr>
+            <td>질경이</td>
+            <td>마음 생리대 중형</td>
+            <td><div class="pad-rating"><span>★</span>4.36 (85명)</div></td>
+            <td><div class="pad-hashtags"><span class="pad-hashtag">#8ea</span><span class="pad-hashtag">#7,900원</span></div></td>
+          </tr>
+          <tr>
+            <td>치유비</td>
+            <td>유기농 순면 생리대 중형</td>
+            <td><div class="pad-rating"><span>★</span>4.32 (95명)</div></td>
+            <td><div class="pad-hashtags"><span class="pad-hashtag">#12ea</span><span class="pad-hashtag">#9,900원</span></div></td>
+          </tr>
+        </tbody>
+      </table>
+    `;
+  } else if (type === 'overnight') {
+    recommendation = `
+      <h2>오버나이트 / 입는 생리대</h2>
+      <table class="pad-table">
+        <thead>
+          <tr>
+            <th>브랜드관</th>
+            <th>제품 이름</th>
+            <th>별점</th>
+            <th>해시태그</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>시크릿데이</td>
+            <td>입는 오버나이트</td>
+            <td><div class="pad-rating"><span>★</span>4.8 (805명)</div></td>
+            <td><div class="pad-hashtags"><span class="pad-hashtag">#4ea</span><span class="pad-hashtag">#5,900원</span><span class="pad-hashtag">#오버나이트</span><span class="pad-hashtag">부문</span><span class="pad-hashtag">1위</span></div></td>
+          </tr>
+          <tr>
+            <td>좋은 느낌</td>
+            <td>입는 오버나이트</td>
+            <td><div class="pad-rating"><span>★</span>4.69 (1,299명)</div></td>
+            <td><div class="pad-hashtags"><span class="pad-hashtag">#8ea</span><span class="pad-hashtag">#12,700원</span><span class="pad-hashtag">#오버나이트</span><span class="pad-hashtag">부문</span><span class="pad-hashtag">2위</span></div></td>
+          </tr>
+          <tr>
+            <td>순수한면</td>
+            <td>100% 유기농 순면 입는 오버나이트</td>
+            <td><div class="pad-rating"><span>★</span>4.77 (155명)</div></td>
+            <td><div class="pad-hashtags"><span class="pad-hashtag">#4ea</span><span class="pad-hashtag">#7,900원</span></div></td>
+          </tr>
+          <tr>
+            <td>디어스킨</td>
+            <td>리얼모달 입는 오버나이트</td>
+            <td><div class="pad-rating"><span>★</span>4.75 (205명)</div></td>
+            <td><div class="pad-hashtags"><span class="pad-hashtag">#8ea</span><span class="pad-hashtag">#7,900원</span><span class="pad-hashtag">#오버나이트</span><span class="pad-hashtag">부문</span><span class="pad-hashtag">3위</span></div></td>
+          </tr>
+          <tr>
+            <td>순수한면</td>
+            <td>제로 입는 오버나이트</td>
+            <td><div class="pad-rating"><span>★</span>4.68 (101명)</div></td>
+            <td><div class="pad-hashtags"><span class="pad-hashtag">#4ea</span><span class="pad-hashtag">#7,900원</span></div></td>
+          </tr>
+        </tbody>
+      </table>
+    `;
   }
 
   resultContainer.innerHTML = recommendation;
   resultContainer.style.display = 'block';
 }
 
+function loadCards(type) {
+  fetch('cards.json')
+    .then(res => res.json())
+    .then(data => {
+      const containerId = type === 'guide' ? 'guideCardContainer' : 'policyCardContainer';
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+
+      if (type === 'policy') {
+        data.policy.forEach(card => {
+          const html = `
+            <div class="card">
+              <div class="card-header">
+                <h2>${card.title}</h2>
+                <div class="card-icon">
+                  <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+                    <path d="M12 8v8m-4-4h8" class="plus-icon" />
+                    <path d="M12 8v8" class="minus-icon" />
+                  </svg>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="card-content">
+                  <div class="content-section">
+                    <p>${card.content}</p>
+                    <br>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+          container.insertAdjacentHTML('beforeend', html);
+        });
+      } else if (type === 'guide') {
+        data.guide.forEach(card => {
+          const introHtml = card.intro.split('\n').map(p => `<p>${p}</p>`).join('');
+          const listHtml = card.list.map(item => `<li>${item}</li>`).join('');
+          const tipHtml = card.tip ? `<p class="guide-tip">${card.tip}</p>` : '';
+
+          const html = `
+            <div class="card">
+              <div class="card-header">
+                <h2>${card.title}</h2>
+                <div class="card-icon">
+                  <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+                    <path d="M12 8v8m-4-4h8" class="plus-icon" />
+                    <path d="M12 8v8" class="minus-icon" />
+                  </svg>
+                </div>
+              </div>
+              <div class="card-body">
+                ${introHtml}
+                <div class="card-content">
+                  <div class="content-section">
+                    <h3>${card.sectionTitle}</h3>
+                    <ul>${listHtml}</ul>
+                    ${tipHtml}
+                    <br>
+                  </div>
+                </div>
+              </div>
+            </div>`;
+          container.insertAdjacentHTML('beforeend', html);
+        });
+      }
+
+      initCards(); // 카드 토글 기능 다시 적용
+    });
+}
+
+
 // 초경 전/남자들을 위한 기본 백서, 정책 관련 기능
 function initCards() {
-  // Select all cards
   const cards = document.querySelectorAll('.card');
 
-  // Add click event to each card
   cards.forEach(card => {
     const header = card.querySelector('.card-header');
 
     header.addEventListener('click', () => {
-      // Check if this card is already expanded
       const isExpanded = card.classList.contains('expanded');
 
-      // First close all cards
       closeAllCards();
 
-      // If the clicked card wasn't expanded before, expand it
-      // Otherwise, it will remain closed (toggle behavior)
       if (!isExpanded) {
         expandCard(card);
-        // Update layout to accommodate the expanded card
         updateCardGrid();
       }
     });
   });
 
-  // Function to expand a card
+  // 카드 펼친 경우 
   function expandCard(card) {
     card.classList.add('expanded');
 
@@ -369,8 +452,6 @@ function initCards() {
         cardBody.style.padding = '20px';
       }
     }
-
-    // Apply smooth scrolling to the expanded card if not in view
     setTimeout(() => {
       const cardRect = card.getBoundingClientRect();
       const isFullyVisible =
@@ -383,7 +464,7 @@ function initCards() {
     }, 100);
   }
 
-  // Function to close all cards
+  // 카드 접기 
   function closeAllCards() {
     cards.forEach(card => {
       // 카드의 expanded 클래스 제거
@@ -407,24 +488,20 @@ function initCards() {
     // 필요한 경우 여기에 추가 로직 구현 가능
   }
 
-  // Close cards when clicking outside
+
   document.addEventListener('click', function(event) {
-    // If click is not on a card or card content
     if (!event.target.closest('.card')) {
       closeAllCards();
     }
   });
 
-  // Handle window resize
   window.addEventListener('resize', function() {
-    // Update layout for expanded cards
     const expandedCard = document.querySelector('.card.expanded');
     if (expandedCard) {
       updateCardGrid();
     }
   });
 
-  // Add smooth transitions when cards change states
   cards.forEach(card => {
     card.addEventListener('transitionend', function(e) {
       if (e.propertyName === 'max-height' && card.classList.contains('expanded')) {

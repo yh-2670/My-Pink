@@ -65,7 +65,8 @@
     </div>
 
     <div class="footer-section">
-      <h4>“상대방은 당사자의 아픔을 잘 설명하지 않는다면 이해하기도 어렵고 괜히 불만만 생길 수 있답니다. 올바른 커뮤니케이션을 통해 서로 배려하고 받을 수 있는 사회를 만들 수 있습니다”</h4>
+      <h4>“상대방은 당사자의 아픔을 잘 설명하지 않는다면 이해하기도 어렵고 괜히 불만만 생길 수 있답니다.</h4>
+      <h4>올바른 커뮤니케이션을 통해 서로 배려하고 받을 수 있는 사회를 만들 수 있습니다”</h4>
     </div>
   </div>
 
@@ -117,23 +118,30 @@
         <h2>나를 위한 맞춤형 처방!</h2>
       </div>
     </div>
-    <div class="message-container">
-      <h2>📌 상사/선생님에게 보내는 메시지</h2>
-      <textarea id="bossMessage"
-        class="message-textarea">안녕하세요, OOO님. 제가 오늘 생리통이 있어 업무 능률이 조금 떨어질 수 있습니다. 이해해 주시면 감사하겠습니다.</textarea>
-      <div class="button-group">
-        <button class="action-btn" onclick="copyToClipboard('bossMessage')">복사하기</button>
-        <button class="action-btn" data-target="bossMessage" onclick="saveMessage('bossMessage')">저장하기</button>
+
+    <div class="prescription-container">
+      <div class="medicine-info">
+        <div class="medicine-text">
+          <div class="medicine-name" id="medicineName"></div>
+          <div class="medicine-details">
+            <p class="detail-item" id="medicineEffect"></p>
+            <p class="detail-item" id="medicineIngredient"></p>
+            <p class="detail-item" id="medicineBrands"></p>
+          </div>
+        </div>
+        <div class="medicine-image">
+          <img id="medicineImage" src="images/acetaminophen.png" alt="약 이미지">
+        </div>
       </div>
 
-      <h2>📌 팀원/친구들에게 보내는 메시지</h2>
-      <textarea id="teamMessage" class="message-textarea">안녕, 오늘 생리통이 있어서 컨디션이 좋지 않아. 미안하지만 약간 쉬어가며 일해도 될까?</textarea>
-      <div class="button-group">
-        <button class="action-btn" onclick="copyToClipboard('teamMessage')">복사하기</button>
-        <button class="action-btn" data-target="teamMessage" onclick="saveMessage('teamMessage')">저장하기</button>
+      <div class="dosage-info">
+        <h2>복약정보</h2>
+        <ul class="dosage-list" id="dosageList"></ul>
       </div>
-
-      <button class="policy-btn" data-page="policy">만약에 안 된다면 법적/정책으로 보장 받을 수 있는 정보 보기</button>
+    </div>
+    <div class="footer-section">
+      <h4>이 정보는 일반적인 가이드라인이며, 개인의 건강 상태에 따라 적합한 약물이 다를 수 있습니다.</h4>
+      <h4>심각하거나 지속적인 생리통은 산부인과 전문의와 상담하는 것이 좋습니다.</h4>
     </div>
   </div>
 
@@ -155,15 +163,15 @@
       <textarea id="bossMessage"
         class="message-textarea">안녕하세요, OOO님. 제가 오늘 생리통이 있어 업무 능률이 조금 떨어질 수 있습니다. 이해해 주시면 감사하겠습니다.</textarea>
       <div class="button-group">
-        <button class="action-btn" onclick="copyToClipboard('bossMessage')">복사하기</button>
-        <button class="action-btn" data-target="bossMessage" onclick="saveMessage('bossMessage')">저장하기</button>
+        <button class="action-btn" id="btn_copy_boss">복사하기</button>
+        <button class="action-btn" id="btn_save_boss">저장하기</button>
       </div>
 
       <h2>📌 팀원/친구들에게 보내는 메시지</h2>
       <textarea id="teamMessage" class="message-textarea">안녕, 오늘 생리통이 있어서 컨디션이 좋지 않아. 미안하지만 약간 쉬어가며 일해도 될까?</textarea>
       <div class="button-group">
-        <button class="action-btn" onclick="copyToClipboard('teamMessage')">복사하기</button>
-        <button class="action-btn" data-target="teamMessage" onclick="saveMessage('teamMessage')">저장하기</button>
+        <button class="action-btn" id="btn_copy_team">복사하기</button>
+        <button class="action-btn" id="btn_save_team">저장하기</button>
       </div>
 
       <button class="policy-btn" data-page="policy">만약에 안 된다면 법적/정책으로 보장 받을 수 있는 정보 보기</button>
@@ -181,91 +189,8 @@
         <h2>어떤 법이 있을까?</h2>
       </div>
     </div>
-    <div class="guidecard-grid">
-      <!-- 생리 휴가 카드 -->
-      <div class="card" data-card-id="pad-usage">
-        <div class="card-header">
-          <h2>생리휴가</h2>
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-              <path d="M12 8v8m-4-4h8" stroke-linecap="round" stroke-linejoin="round" class="plus-icon"></path>
-              <path d="M12 8v8" stroke-linecap="round" stroke-linejoin="round" class="minus-icon"></path>
-            </svg>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="card-content">
-            <div class="content-section">
-              <p>「근로기준법」 제73조에 따라 여성 근로자는 매월 1일의 생리휴가를 신청할 수 있습니다.</p>
-              <br>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="guidecard-grid" id="policyCardContainer"></div>
 
-      <!-- 생리휴가 신청 방법 카드 -->
-      <div class="card" data-card-id="pad-types">
-        <div class="card-header">
-          <h2>생리휴가 신청 방법</h2>
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-              <path d="M12 8v8m-4-4h8" stroke-linecap="round" stroke-linejoin="round" class="plus-icon"></path>
-              <path d="M12 8v8" stroke-linecap="round" stroke-linejoin="round" class="minus-icon"></path>
-            </svg>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="card-content">
-            <div class="content-section">
-              회사 내규에 따라 다르지만, 일반적으로 인사팀에 신청서를 제출하거나 사내 시스템을 통해 신청할 수 있습니다.
-              <br>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 생리휴가와 관련된 권리 카드 -->
-      <div class="card" data-card-id="brands">
-        <div class="card-header">
-          <h2>생리휴가와 관련된 권리</h2>
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-              <path d="M12 8v8m-4-4h8" stroke-linecap="round" stroke-linejoin="round" class="plus-icon"></path>
-              <path d="M12 8v8" stroke-linecap="round" stroke-linejoin="round" class="minus-icon"></path>
-            </svg>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="card-content">
-            <div class="content-section">
-              생리휴가를 이유로 불이익 처우를 받는 것은 법적으로 금지되어 있습니다. 불이익 처우가 발생할 경우 고용노동부에 신고할 수 있습니다.
-            </div>
-            <br>
-          </div>
-        </div>
-      </div>
-
-      <!-- 학교에서의 생리공결제 카드 -->
-      <div class="card" data-card-id="emergency">
-        <div class="card-header">
-          <h2>학교에서의 생리공결제</h2>
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-              <path d="M12 8v8m-4-4h8" stroke-linecap="round" stroke-linejoin="round" class="plus-icon"></path>
-              <path d="M12 8v8" stroke-linecap="round" stroke-linejoin="round" class="minus-icon"></path>
-            </svg>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="card-content">
-            <div class="content-section">
-              많은 학교에서 생리로 인한 결석을 공결로 인정하는 제도를 시행하고 있습니다. 학교 내규를 확인해보세요.
-              <br>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- 생리대 종류 페이지 -->
@@ -280,10 +205,8 @@
       </div>
     </div>
     <div class="button-grid pad-grid">
-      <button class="pad-btn" onclick="showPadRecommendation('absorption')">흡수량</button>
-      <button class="pad-btn" onclick="showPadRecommendation('smell')">냄새</button>
-      <button class="pad-btn" onclick="showPadRecommendation('comfort')">착용감</button>
-      <button class="pad-btn" onclick="showPadRecommendation('size')">사이즈</button>
+      <button class="pad-btn" id='btn_regular'>일반 생리대</button>
+      <button class="pad-btn" id='btn_overnight'>오버나이트/입는 생리대</button>
     </div>
     <div id="padResult" class="pad-result">
       <!-- 생리대 추천 결과가 여기에 표시됩니다 -->
@@ -301,130 +224,7 @@
         <h2>꼭 알아야 할 것들만 모았어요!</h2>
       </div>
     </div>
-    <div class="guidecard-grid">
-      <!-- 생리대 사용법 카드 -->
-      <div class="card" data-card-id="pad-usage">
-        <div class="card-header">
-          <h2>생리대 사용법</h2>
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-              <path d="M12 8v8m-4-4h8" stroke-linecap="round" stroke-linejoin="round" class="plus-icon"></path>
-              <path d="M12 8v8" stroke-linecap="round" stroke-linejoin="round" class="minus-icon"></path>
-            </svg>
-          </div>
-        </div>
-        <div class="card-body">
-          <p>생리를 처음 시작했어요!</p>
-          <p>생리대는 어떻게 착용해야 하나요?</p>
-          <div class="card-content">
-            <div class="content-section">
-              <h3>생리대 착용 방법</h3>
-              <ol>
-                <li>패키지에서 생리대를 꺼냅니다.</li>
-                <li>뒷면의 접착 테이프를 떼어냅니다.</li>
-                <li>속옷의 가운데에 부착합니다.</li>
-                <li>날개가 있다면 속옷 아래로 접어 고정합니다.</li>
-                <li>3-4시간마다 교체하는 것이 좋습니다.</li>
-              </ol>
-              <br>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 생리대 종류 카드 -->
-      <div class="card" data-card-id="pad-types">
-        <div class="card-header">
-          <h2>생리대 종류</h2>
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-              <path d="M12 8v8m-4-4h8" stroke-linecap="round" stroke-linejoin="round" class="plus-icon"></path>
-              <path d="M12 8v8" stroke-linecap="round" stroke-linejoin="round" class="minus-icon"></path>
-            </svg>
-          </div>
-        </div>
-        <div class="card-body">
-          <p>오버나이트, 일반 생리대, 탐폰...</p>
-          <p>어떤 걸 써야 할까요?</p>
-          <div class="card-content">
-            <div class="content-section">
-              <h3>생리대 종류</h3>
-              <ul>
-                <li><strong>일반 생리대:</strong> 낮 시간대 사용, 다양한 크기와 흡수력</li>
-                <li><strong>오버나이트 생리대:</strong> 밤 시간용, 더 긴 길이와 높은 흡수력</li>
-                <li><strong>팬티라이너:</strong> 가벼운 날 또는 생리 시작/끝날 때 사용</li>
-                <li><strong>탐폰:</strong> 체내 삽입형, 수영 등 활동적인 상황에 적합</li>
-                <li><strong>생리컵:</strong> 재사용 가능한 실리콘 컵, 환경 친화적</li>
-              </ul>
-
-              <br>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 자주 쓰이는 브랜드 카드 -->
-      <div class="card" data-card-id="brands">
-        <div class="card-header">
-          <h2>자주 쓰이는 브랜드</h2>
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-              <path d="M12 8v8m-4-4h8" stroke-linecap="round" stroke-linejoin="round" class="plus-icon"></path>
-              <path d="M12 8v8" stroke-linecap="round" stroke-linejoin="round" class="minus-icon"></path>
-            </svg>
-          </div>
-        </div>
-        <div class="card-body">
-          <p>좋은 느낌, 화이트, 바디피트...</p>
-          <p>어떤 브랜드가 좋은가요?</p>
-          <div class="card-content">
-            <div class="content-section">
-              <h3>인기 브랜드</h3>
-              <ul>
-                <li><strong>좋은느낌:</strong> 다양한 제품 라인업, 부드러운 착용감</li>
-                <li><strong>화이트:</strong> 순면 소재 제품, 저자극성</li>
-                <li><strong>바디피트:</strong> 신체에 맞는 디자인, 활동성 높음</li>
-                <li><strong>릴리안:</strong> 유기농 제품, 환경 친화적</li>
-                <li><strong>쏘피:</strong> 경제적인 가격과 높은 품질</li>
-              </ul>
-              <p class="guide-tip">TIP: 자신의 피부 타입과 생리량에 맞는 제품 선택이 중요해요!</p>
-            </div>
-            <br>
-          </div>
-        </div>
-      </div>
-
-      <!-- 급하게 필요할 때 카드 -->
-      <div class="card" data-card-id="emergency">
-        <div class="card-header">
-          <h2>급하게 필요할 때?</h2>
-          <div class="card-icon">
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-              <path d="M12 8v8m-4-4h8" stroke-linecap="round" stroke-linejoin="round" class="plus-icon"></path>
-              <path d="M12 8v8" stroke-linecap="round" stroke-linejoin="round" class="minus-icon"></path>
-            </svg>
-          </div>
-        </div>
-        <div class="card-body">
-          <p>생리가 갑자기 시작되었어요!</p>
-          <p>생리대가 없을 때는 어떻게 해야 할까요?</p>
-          <div class="card-content">
-            <div class="content-section">
-              <h3>응급 상황 대처법</h3>
-              <ul>
-                <li><strong>화장실 휴지:</strong> 임시로 두껍게 접어 사용</li>
-                <li><strong>학교 보건실:</strong> 대부분 생리대를 구비하고 있음</li>
-                <li><strong>편의점/마트:</strong> 24시간 이용 가능한 곳에서 구매</li>
-                <li><strong>여성 친구에게 부탁:</strong> 주변 여성에게 도움 요청</li>
-                <li><strong>공중화장실 생리대 자판기:</strong> 일부 화장실에 설치되어 있음</li>
-              </ul>
-              <p class="guide-tip">TIP: 가방에 여분의 생리대를 항상 준비해두면 좋아요!</p>
-              <br>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="guidecard-grid" id="guideCardContainer"> </div>
   </div>
 
   <script src="script.js"></script>

@@ -3,15 +3,18 @@
   "name": "마이핑크",
   "version": "1.0",
   "description": "상대방은 당사자의 아픔을 잘 설명하지 않는다면 이해하기도 어렵고 괜히 불만만 생길 수 있답니다. 올바른 커뮤니케이션을 통해 서로 배려하고 받을 수 있는 사회를 만들 수 있습니다",
+ "icons": {
+    "16": "images/Icon_.png",
+    "48": "images/Icon_.png",
+    "64": "images/Icon_.png",
+    "128": "images/Icon_.png"
+  },
   "action": {
     "default_popup": "index.html",
-    "default_icon": "images/title.png"
+    "default_icon": "images/Icon_.png"
   },
   "permissions": [
     "storage"
-  ],
-  "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'"
-  }
+  ]
 }
 

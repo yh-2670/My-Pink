@@ -27,6 +27,7 @@ body {
   display: none;
   padding: 20px;
   min-height: 100vh;
+  width: 700px;
 }
 
 .active {
@@ -405,6 +406,27 @@ h2 {
   transform: translateY(-2px);
 }
 
+/* 처방전 */
+.medicine-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.medicine-text {
+  flex: 1;
+}
+
+.medicine-image {
+  flex-shrink: 0;
+}
+
+.medicine-image img {
+  width: 250px;
+  object-fit: contain;
+}
+
 /* 직장 내 생리통 대처법 페이지 */
 .message-container {
   padding: 20px;
@@ -495,17 +517,78 @@ h2 {
   display: none;
 }
 
-.product-list {
+.pad-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
   margin-top: 20px;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(138, 86, 172, 0.15);
 }
 
-.product-item {
-  display: grid;
-  grid-template-columns: minmax(100px, 2fr) 150px 60px;
-  grid-gap: 10px;
+.pad-table th,
+.pad-table td {
+  padding: 18px 15px;
+  text-align: left;
+  border-bottom: 1px solid #f0e6f6;
+}
+
+.pad-table th {
+  background-color: #f8f4fb;
+  color: var(--primary-color);
+  font-weight: bold;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.pad-table td {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.pad-table tr:last-child td {
+  border-bottom: none;
+}
+
+.pad-table tr:hover {
+  background-color: #faf6fd;
+}
+
+.pad-table td:nth-child(2) {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.pad-table td:nth-child(3) {
+  color: #4a4a4a;
+  font-weight: 500;
+}
+
+.pad-rating {
+  display: flex;
   align-items: center;
-  padding: 15px 0;
-  border-bottom: 1px solid #eee;
+  gap: 5px;
+}
+
+.pad-rating span {
+  color: #ffa41c;
+}
+
+.pad-hashtags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pad-hashtag {
+  background-color: #f0e6f6;
+  color: var(--primary-color);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
 }
 
 .product-name {
@@ -562,7 +645,8 @@ h2 {
   box-shadow: var(--card-shadow);
   overflow: hidden;
   transition: all var(--transition-speed) ease;
-  margin-bottom: 5px; /* 카드 사이 간격 추가 */
+  margin-bottom: 5px;
+  /* 카드 사이 간격 추가 */
 }
 
 .card.expanded {
@@ -636,7 +720,7 @@ h2 {
 .card.expanded .card-body {
   padding: 20px;
   height: auto;
-  max-height: 1000px; /* Large enough to contain content */
+  max-height: 1000px;
 }
 
 .card-body p {
@@ -702,6 +786,7 @@ h2 {
 
 /* Responsive Styles */
 @media (max-width: 768px) {
+
   .content-section,
   .content-image {
     flex: 100%;
@@ -710,4 +795,63 @@ h2 {
   .content-image {
     margin-top: 20px;
   }
+}
+
+/* 처방전 페이지 */
+.prescription-container {
+  padding: 20px;
+  margin: 20px;
+  background-color: white;
+  border-radius: 20px;
+}
+
+.medicine-info {
+  margin-bottom: 10px;
+  margin-left: 20px;
+  margin-top : 10px;
+}
+
+.medicine-name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.medicine-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.detail-item {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.dosage-info {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.dosage-info h2 {
+  margin-bottom: 15px;
+}
+
+.dosage-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.dosage-list li {
+  margin-bottom: 10px;
+  line-height: 1.5;
+  padding-left: 15px;
+  position: relative;
+}
+
+.dosage-list li:before {
+  content: "•";
+  position: absolute;
+  left: 0;
 }
