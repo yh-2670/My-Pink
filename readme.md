@@ -11,9 +11,9 @@
 
 ## 📌 Project Overview
 
-> “The absence of dialogue often leads to misunderstanding.  
-> Menstruation is not an excuse—it’s a physiological reality.  
-> _My-Pink bridges the communication gap surrounding menstrual health._”
+> "Menstrual pain isn't just a private issue.  
+> It's a public health concern—amplified by silence, misinformation, and inadequate systems.  
+> This project bridges the gap with data, education, and empathy."
 
 **My-Pink** is a **gender-inclusive communication tool** delivered as a Chrome browser extension.  
 It provides medically accurate, accessible content related to menstrual pain, painkiller usage, institutional coping strategies (school/work), product selection, and foundational education on menstruation.
